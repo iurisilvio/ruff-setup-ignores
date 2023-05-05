@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 from subprocess import PIPE, Popen
 
-# Python built-in tomllib is read only, so I need toml dependency.
-import toml
+# Python built-in tomllib is read only, so I need tomlkit dependency.
+import tomlkit
 from ruff.__main__ import find_ruff_bin
 
 
@@ -56,8 +56,9 @@ def data_cleanup(violations):
 
 
 def update_toml(toml_file, data):
-    basename = Path(toml_file).name
-    toml_data = toml.load(toml_file)
+    toml_path = Path(toml_file)
+    basename = toml_path.name
+    toml_data = tomlkit.loads(toml_path.read_text())
 
     if basename == "pyproject.toml":
         toml_data.setdefault("tool", {})
@@ -69,10 +70,11 @@ def update_toml(toml_file, data):
         except KeyError:
             ruff_section = toml_data
 
-    ruff_section["per-file-ignores"] = data
-
-    with open(toml_file, "w") as f:
-        toml.dump(toml_data, f)
+    current = ruff_section.get("per-file-ignores", {})
+    if current != data:
+        ruff_section["per-file-ignores"] = data
+        with open(toml_file, "w") as f:
+            tomlkit.dump(toml_data, f)
 
 
 def main(toml_file):

@@ -45,7 +45,7 @@ def test_pyproject_toml(pyproject_tmp, toml_file):
     foo = "bar"
 
     [tool.ruff.per-file-ignores]
-    "bar.py" = [ "E501",]
+    "bar.py" = ["E501"]
     """
     ).lstrip()
 
@@ -68,7 +68,7 @@ def test_ruff_toml(ruff_tmp, toml_file):
     foo = "bar"
 
     [per-file-ignores]
-    "bar.py" = [ "E501",]
+    "bar.py" = ["E501"]
     """
     ).lstrip()
 
@@ -91,7 +91,7 @@ def test_ruff_toml_with_tool_ruff_prefix(ruff_tmp, toml_file):
     foo = "bar"
 
     [tool.ruff.per-file-ignores]
-    "bar.py" = [ "E501",]
+    "bar.py" = ["E501"]
     """
     ).lstrip()
 
