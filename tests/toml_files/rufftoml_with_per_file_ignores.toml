@@ -1,0 +1,4 @@
+foo = "bar"
+
+[per-file-ignores]
+"foo.py" = ["E501"]

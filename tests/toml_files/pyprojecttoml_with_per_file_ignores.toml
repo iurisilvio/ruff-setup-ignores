@@ -1,0 +1,5 @@
+[foo]
+foo = "bar"
+
+[tool.ruff.per-file-ignores]
+"foo.py" = ["E501"]
